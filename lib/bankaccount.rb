@@ -8,14 +8,14 @@ class BankAccount
   end
 
   def deposit(amount)
-    @transactions << {:"#{Date.today}" => amount}
+    @transactions << {:date => "#{Date.today}", :amount => amount}
   end
 
   def withdraw(amount)
-    @transactions << {:"#{Date.today}" => -amount}
+    @transactions << {:date => "#{Date.today}", :amount => -amount}
   end
 
   def print_statement
-    "date || credit || debit || balance"
+    statement = "date || credit || debit || balance"
   end
 end

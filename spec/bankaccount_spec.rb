@@ -16,7 +16,7 @@ describe BankAccount do
     # test for TDD, not needed in final test suite
     it 'should save date and amount of the transaction' do
       subject.deposit(100)
-      expect(subject.transactions).to eq [{ :"2021-01-01" => 100 }]
+      expect(subject.transactions).to eq [{ :date => "2021-01-01", :amount => 100 }]
     end
   end
 
@@ -26,7 +26,7 @@ describe BankAccount do
     # test for TDD, not needed in final test suite
     it 'should save date and amount of the transaction, with amount negative' do
       subject.withdraw(100)
-      expect(subject.transactions).to eq [{ :"2021-01-01" => -100 }]
+      expect(subject.transactions).to eq [{ :date => "2021-01-01", :amount => -100 }]
     end
   end
 
@@ -36,5 +36,10 @@ describe BankAccount do
     it 'should print headers' do
       expect(subject.print_statement).to eq('date || credit || debit || balance')
     end
+
+    # it 'should print headers and deposit' do
+    #   subject.deposit(200)
+    #   expect(subject.print_statement).to eq("date || credit || debit || balance\n10/01/2012 || 200.00 || || 200.00")
+    # end
   end
 end
