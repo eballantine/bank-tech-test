@@ -12,6 +12,7 @@ class BankAccount
   end
 
   def withdraw(amount)
+    @transactions << {:"#{Date.today}" => -amount}
   end
 
   def print_statement
