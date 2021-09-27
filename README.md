@@ -18,14 +18,20 @@ Run ```rspec -fd``` to see all test descriptions, each test's pass/fail status, 
 ## Run program
 
 To run the program, ensure you're in the root folder of the project and start an interactive Ruby session from your terminal:<br>
-```irb```
+<br>
+```irb```<br>
+<br>
 Require the code:<br>
-```require './lib/bankaccount.rb'```
+<br>
+```require './lib/bankaccount.rb'```<br>
+<br>
 Create a new bank account:<br>
-```my_account = BankAccount.new```
+<br>
+```my_account = BankAccount.new```<br>
+<br>
 You're now free to make deposits, withdrawals, or check your statement as you see fit:<br>
-****** TO DO Screenshot of it in action. ***** 
-
+<br>
+![Bank program being run in IRB](/images/bankaccountv1.png)<br>
 ## Requirements
 
 You should be able to interact with your code via a REPL like IRB or the JavaScript console.<br>
