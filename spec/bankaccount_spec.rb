@@ -25,6 +25,14 @@ describe BankAccount do
   describe '.withdraw' do
     it { is_expected.to respond_to(:withdraw).with(1).arguments }
 
+    it 'raises an error if not given a number' do
+      expect { subject.withdraw("Hello!") }.to raise_exception(RuntimeError, "Please provide the amount in pounds and pence, e.g. 10.00" )
+    end
+
+    it 'raises an error if not given a positive number' do
+      expect { subject.withdraw(-10.00) }.to raise_exception(RuntimeError, "Deposit amount must be positive")
+    end
+
     it 'should show on the statement' do
       subject.withdraw(300.00)
       expect(subject.print_statement).to include("300.00")

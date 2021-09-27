@@ -14,6 +14,9 @@ class BankAccount
   end
 
   def withdraw(amount)
+    raise "Please provide the amount in pounds and pence, e.g. 10.00" unless amount.is_a? Float
+    raise "Deposit amount must be positive" if amount <= 0
+    
     @transactions << {type: :withdrawal, date: "#{Date.today}", amount: amount.round(2)}
   end
 
