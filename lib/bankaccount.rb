@@ -19,16 +19,20 @@ class BankAccount
   def print_statement
     statement = ""
     @transactions.each_with_index do |transaction, i|
-      if transaction[:type] == :deposit
-        statement.prepend("\n #{transaction[:date]} || #{'%.2f' % transaction[:amount]} || || #{calc_balance(i)}")
-      else 
-        statement.prepend("\n #{transaction[:date]} || || #{'%.2f' % transaction[:amount]} || #{calc_balance(i)}")
-      end
+      statement.prepend(create_statement_entry(transaction, i))
     end
     statement.prepend("date || credit || debit || balance")
   end
 
   private
+
+  def create_statement_entry(transaction, i)
+    if transaction[:type] == :deposit
+      "\n #{transaction[:date]} || #{'%.2f' % transaction[:amount]} || || #{calc_balance(i)}"
+    else
+      "\n #{transaction[:date]} || || #{'%.2f' % transaction[:amount]} || #{calc_balance(i)}"
+    end
+  end
 
   def calc_balance(i)
     balance = 0
