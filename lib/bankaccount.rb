@@ -1,9 +1,9 @@
 class BankAccount
 
-  def deposit(date, amount)
+  def deposit(amount)
   end
 
-  def withdraw(date, amount)
+  def withdraw(amount)
   end
 
   def print_statement
