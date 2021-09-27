@@ -8,12 +8,12 @@ class BankAccount
 
   def deposit(amount)
     check_validity(amount)
-    @transactions << {type: :deposit, date: "#{transaction_date}", amount: amount.round(2)}
+    @transactions << { type: :deposit, date: "#{transaction_date}", amount: amount.round(2) }
   end
 
   def withdraw(amount)
     check_validity(amount)
-    @transactions << {type: :withdrawal, date: "#{transaction_date}", amount: amount.round(2)}
+    @transactions << { type: :withdrawal, date: "#{transaction_date}", amount: amount.round(2) }
   end
 
   def print_statement
