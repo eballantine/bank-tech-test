@@ -1,29 +1,31 @@
+# frozen_string_literal: true
+
 require 'Date'
 
+# This class is responsible for allowing a user to interact with their bank account
 class BankAccount
-
   def initialize
     @transactions = []
   end
 
   def deposit(amount)
     check_validity(amount)
-    @transactions << { type: :deposit, date: "#{transaction_date}", amount: amount.round(2) }
+    @transactions << { type: :deposit, date: transaction_date.to_s, amount: amount.round(2) }
   end
 
   def withdraw(amount)
     check_validity(amount)
-    return "Insufficient funds to make this withdrawal" if amount > calc_balance
+    return 'Insufficient funds to make this withdrawal' if amount > calc_balance
 
-    @transactions << { type: :withdrawal, date: "#{transaction_date}", amount: amount.round(2) }
+    @transactions << { type: :withdrawal, date: transaction_date.to_s, amount: amount.round(2) }
   end
 
   def print_statement
-    statement = ""
-    @transactions.each_with_index do |transaction, i|
-      statement.prepend(create_statement_entry(transaction, i))
+    statement = +''
+    @transactions.each_with_index do |transaction, index|
+      statement.prepend(create_statement_entry(transaction, index))
     end
-    statement.prepend("date || credit || debit || balance")
+    statement.prepend('date || credit || debit || balance')
   end
 
   private
@@ -33,20 +35,20 @@ class BankAccount
     Date.parse(date).strftime('%d/%m/%Y')
   end
 
-  def create_statement_entry(transaction, i)
+  def create_statement_entry(transaction, index)
     if transaction[:type] == :deposit
-      "\n#{transaction[:date]} || #{'%.2f' % transaction[:amount]} || || #{calc_running_balance(i)}"
+      "\n#{transaction[:date]} || #{format('%.2f', transaction[:amount])} || || #{calc_running_balance(index)}"
     else
-      "\n#{transaction[:date]} || || #{'%.2f' % transaction[:amount]} || #{calc_running_balance(i)}"
+      "\n#{transaction[:date]} || || #{format('%.2f', transaction[:amount])} || #{calc_running_balance(index)}"
     end
   end
 
-  def calc_running_balance(i)
+  def calc_running_balance(index)
     balance = 0
-    @transactions[0..i].each do |transaction|
+    @transactions[0..index].each do |transaction|
       transaction[:type] == :deposit ? balance += transaction[:amount] : balance -= transaction[:amount]
     end
-    '%.2f' % balance
+    format('%.2f', balance)
   end
 
   def calc_balance
@@ -58,8 +60,8 @@ class BankAccount
   end
 
   def check_validity(amount)
-    raise "Please provide the amount in pounds and pence, e.g. 10.00" unless amount.is_a? Float
-    raise "Deposit amount must be positive" if amount <= 0
-    raise "Please provide the amount in pounds and pence, e.g. 10.00" if amount.round(2) != amount
+    raise 'Please provide the amount in pounds and pence, e.g. 10.00' unless amount.is_a? Float
+    raise 'Deposit amount must be positive' if amount <= 0
+    raise 'Please provide the amount in pounds and pence, e.g. 10.00' if amount.round(2) != amount
   end
 end
