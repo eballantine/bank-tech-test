@@ -8,12 +8,14 @@ class BankAccount
 
   def deposit(amount)
     valid_amount?(amount)
-    @transactions << {type: :deposit, date: "#{Date.today}", amount: amount.round(2)}
+    date = Date.today
+    @transactions << {type: :deposit, date: "#{Date.parse(date).strftime('%d/%m/%Y')}", amount: amount.round(2)}
   end
 
   def withdraw(amount)
     valid_amount?(amount)
-    @transactions << {type: :withdrawal, date: "#{Date.today}", amount: amount.round(2)}
+    date = Date.today
+    @transactions << {type: :withdrawal, date: "#{Date.parse(date).strftime('%d/%m/%Y')}", amount: amount.round(2)}
   end
 
   def print_statement

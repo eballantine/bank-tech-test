@@ -54,7 +54,7 @@ describe BankAccount do
 
     it 'should print date with transactions' do
       subject.deposit(150.00)
-      expect(subject.print_statement).to include("2021-01-01")
+      expect(subject.print_statement).to include("01/01/2021")
     end
 
     it 'should print deposits in the second column' do
@@ -70,7 +70,7 @@ describe BankAccount do
     it 'should print transactions in reverse chronological order' do
       subject.deposit(200.00)
       subject.withdraw(10.00)
-      expect(subject.print_statement).to eq "date || credit || debit || balance\n 2021-01-01 || || 10.00 || 190.00\n 2021-01-01 || 200.00 || || 200.00"
+      expect(subject.print_statement).to eq "date || credit || debit || balance\n 01/01/2021 || || 10.00 || 190.00\n 01/01/2021 || 200.00 || || 200.00"
     end
   end
 end
