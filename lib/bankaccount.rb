@@ -5,4 +5,7 @@ class BankAccount
 
   def withdraw(date, amount)
   end
+
+  def print_statement
+  end
 end
