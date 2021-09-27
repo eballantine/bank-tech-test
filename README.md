@@ -44,4 +44,6 @@ The print_statement method will take the stored transactions array and use a pri
 <br> 
 _Should the statement be restricted to print just the latest month, or latest 30 transactions, or similar?_ <br> 
  <br> 
+Without mention of overdraft facility, I will restrict the bankaccount from allowing a withdrawal greater than the current balance.<br>
+<br>
 ![Domain model for bank account](/images/plan.png)

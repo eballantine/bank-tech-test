@@ -3,6 +3,7 @@ require 'bankaccount'
 describe BankAccount do 
   let(:not_float_error) { "Please provide the amount in pounds and pence, e.g. 10.00" }
   let(:not_positive_error) { "Deposit amount must be positive" }
+  let(:insufficient_funds_error) { "Insufficient funds to make this withdrawal" }
 
   before(:each) do 
     allow(Date).to receive(:today).and_return("2021-01-01")
@@ -13,7 +14,7 @@ describe BankAccount do
   it { is_expected.to respond_to(:print_statement).with(0).arguments }
 
   describe '.deposit' do
-    it 'should raise an error if not given a number' do
+    it 'should raise an error if not given a float' do
       expect { subject.deposit("Hello!") }.to raise_exception(RuntimeError, not_float_error)
     end
 
@@ -31,7 +32,11 @@ describe BankAccount do
   end
 
   describe '.withdraw' do
-    it 'should raise an error if not given a number' do
+    before(:each) do
+      subject.deposit(100.00)
+    end
+
+    it 'should raise an error if not given a float' do
       expect { subject.withdraw("Hello!") }.to raise_exception(RuntimeError, not_float_error)
     end
 
@@ -40,11 +45,15 @@ describe BankAccount do
     end
 
     it 'should raise an error if given a float with anything other than 2 decimal places' do
-      expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
+      expect { subject.withdraw(10.123) }.to raise_exception(RuntimeError, not_float_error)
+    end
+
+    it 'should raise an error if attempting to withdraw more than the current balance' do
+      expect { subject.withdraw(500.00) }.to raise_exception(RuntimeError, insufficient_funds_error)
     end
 
     it 'should accept amounts which include pennies (not whole pounds)' do
-      expect { subject.deposit(9.99) }.not_to raise_exception()
+      expect { subject.withdraw(9.99) }.not_to raise_exception()
     end
   end
 
@@ -64,6 +73,7 @@ describe BankAccount do
     end
 
     it 'should print withdrawals in the third column with empty second column' do
+      subject.deposit(300.00)
       subject.withdraw(100.00)
       expect(subject.print_statement).to include("|| || 100.00 ||")
     end
