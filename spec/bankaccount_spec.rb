@@ -16,7 +16,7 @@ describe BankAccount do
     # test for TDD, not needed in final test suite
     it 'should save date and amount of the transaction' do
       subject.deposit(100)
-      expect(subject.transactions).to eq [{ type: "deposit", date: "2021-01-01", amount: 100 }]
+      expect(subject.transactions).to eq [{ type: :deposit, date: "2021-01-01", amount: 100 }]
     end
 
     it 'should show on the statement' do
@@ -31,7 +31,7 @@ describe BankAccount do
     # test for TDD, not needed in final test suite
     it 'should save date and amount of the transaction, with amount negative' do
       subject.withdraw(100)
-      expect(subject.transactions).to eq [{ type: "withdrawal", date: "2021-01-01", amount: 100 }]
+      expect(subject.transactions).to eq [{ type: :withdrawal, date: "2021-01-01", amount: 100 }]
     end
 
     it 'should show on the statement' do
@@ -56,6 +56,16 @@ describe BankAccount do
     it 'should print date with transactions' do
       subject.deposit(150)
       expect(subject.print_statement).to include("2021-01-01")
+    end
+
+    it 'should print deposits in the second column' do
+      subject.deposit(100)
+      expect(subject.print_statement).to include "100.00 || ||"
+    end
+
+    it 'should print withdrawals in the third column' do
+      subject.withdraw(100)
+      expect(subject.print_statement).to include "|| || 100.00"
     end
   end
 end
