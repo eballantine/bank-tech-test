@@ -48,8 +48,8 @@ describe BankAccount do
       expect { subject.withdraw(10.123) }.to raise_exception(RuntimeError, not_float_error)
     end
 
-    it 'should raise an error if attempting to withdraw more than the current balance' do
-      expect { subject.withdraw(500.00) }.to raise_exception(RuntimeError, insufficient_funds_error)
+    it 'should return if attempting to withdraw more than the current balance' do
+      expect(subject.withdraw(500.00)).to eq(insufficient_funds_error)
     end
 
     it 'should accept amounts which include pennies (not whole pounds)' do
@@ -86,7 +86,28 @@ describe BankAccount do
     it 'should print transactions in reverse chronological order' do
       subject.deposit(200.00)
       subject.withdraw(10.00)
-      expect(subject.print_statement).to eq "date || credit || debit || balance\n 01/01/2021 || || 10.00 || 190.00\n 01/01/2021 || 200.00 || || 200.00"
+      expect(subject.print_statement).to eq "date || credit || debit || balance\n01/01/2021 || || 10.00 || 190.00\n01/01/2021 || 200.00 || || 200.00"
+    end
+
+    context 'many deposits and withdrawals' do
+      it 'should correctly print the statement' do
+        2.times do 
+          subject.deposit(200.00)
+          subject.withdraw(10.00)
+          subject.deposit(52.12)
+          subject.withdraw(999.00)
+        end
+  p subject.print_statement
+        expect(subject.print_statement).to eq(
+          "date || credit || debit || balance\n"\
+          "01/01/2021 || 52.12 || || 484.24\n"\
+          "01/01/2021 || || 10.00 || 432.12\n"\
+          "01/01/2021 || 200.00 || || 442.12\n"\
+          "01/01/2021 || 52.12 || || 242.12\n"\
+          "01/01/2021 || || 10.00 || 190.00\n"\
+          "01/01/2021 || 200.00 || || 200.00"
+        ) 
+      end
     end
   end
 end

@@ -13,7 +13,7 @@ class BankAccount
 
   def withdraw(amount)
     check_validity(amount)
-    raise "Insufficient funds to make this withdrawal" if amount > calc_balance
+    return "Insufficient funds to make this withdrawal" if amount > calc_balance
 
     @transactions << { type: :withdrawal, date: "#{transaction_date}", amount: amount.round(2) }
   end
@@ -35,9 +35,9 @@ class BankAccount
 
   def create_statement_entry(transaction, i)
     if transaction[:type] == :deposit
-      "\n #{transaction[:date]} || #{'%.2f' % transaction[:amount]} || || #{calc_running_balance(i)}"
+      "\n#{transaction[:date]} || #{'%.2f' % transaction[:amount]} || || #{calc_running_balance(i)}"
     else
-      "\n #{transaction[:date]} || || #{'%.2f' % transaction[:amount]} || #{calc_running_balance(i)}"
+      "\n#{transaction[:date]} || || #{'%.2f' % transaction[:amount]} || #{calc_running_balance(i)}"
     end
   end
 
