@@ -18,6 +18,7 @@ class BankAccount
     return 'Insufficient funds to make this withdrawal' if amount > calc_balance
 
     @transactions << { type: :withdrawal, date: transaction_date.to_s, amount: amount.round(2) }
+    "Withdrawal complete"
   end
 
   def print_statement
@@ -31,7 +32,7 @@ class BankAccount
   private
 
   def transaction_date
-    date = Date.today
+    date = Date.today.to_s
     Date.parse(date).strftime('%d/%m/%Y')
   end
 

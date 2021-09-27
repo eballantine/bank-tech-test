@@ -57,6 +57,10 @@ describe BankAccount do
     it 'should accept amounts which include pennies (not whole pounds)' do
       expect { subject.withdraw(9.99) }.not_to raise_exception
     end
+
+    it 'should return a success message if withdrawal is successful' do
+      expect(subject.withdraw(10.00)).to eq "Withdrawal complete"
+    end
   end
 
   describe '.print_statement' do
