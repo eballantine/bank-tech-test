@@ -8,6 +8,10 @@ describe BankAccount do
   describe '.deposit' do
     it { is_expected.to respond_to(:deposit).with(1).arguments }
 
+    it 'raises an error if not given a positive number' do
+      expect { subject.deposit(-10) }.to raise_exception(RuntimeError, "Deposit amount must be positive")
+    end
+
     it 'should show on the statement' do
       subject.deposit(200)
       expect(subject.print_statement).to include("200.00")

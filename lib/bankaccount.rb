@@ -7,6 +7,8 @@ class BankAccount
   end
 
   def deposit(amount)
+    raise "Deposit amount must be positive" if amount <= 0
+
     @transactions << {type: :deposit, date: "#{Date.today}", amount: amount}
   end
 
