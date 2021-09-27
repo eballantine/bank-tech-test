@@ -7,12 +7,12 @@ class BankAccount
   end
 
   def deposit(amount)
-    valid_amount?(amount)
+    check_validity(amount)
     @transactions << {type: :deposit, date: "#{transaction_date}", amount: amount.round(2)}
   end
 
   def withdraw(amount)
-    valid_amount?(amount)
+    check_validity(amount)
     @transactions << {type: :withdrawal, date: "#{transaction_date}", amount: amount.round(2)}
   end
 
@@ -47,7 +47,7 @@ class BankAccount
     '%.2f' % balance
   end
 
-  def valid_amount?(amount)
+  def check_validity(amount)
     raise "Please provide the amount in pounds and pence, e.g. 10.00" unless amount.is_a? Float
     raise "Deposit amount must be positive" if amount <= 0
     raise "Please provide the amount in pounds and pence, e.g. 10.00" if amount.round(2) != amount
