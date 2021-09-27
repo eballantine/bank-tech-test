@@ -7,22 +7,23 @@ class BankAccount
   end
 
   def deposit(amount)
+    raise "Please provide the amount in pounds and pence, e.g. 10.00" unless amount.is_a? Float
     raise "Deposit amount must be positive" if amount <= 0
 
-    @transactions << {type: :deposit, date: "#{Date.today}", amount: amount}
+    @transactions << {type: :deposit, date: "#{Date.today}", amount: amount.round(2)}
   end
 
   def withdraw(amount)
-    @transactions << {type: :withdrawal, date: "#{Date.today}", amount: amount}
+    @transactions << {type: :withdrawal, date: "#{Date.today}", amount: amount.round(2)}
   end
 
   def print_statement
     statement = ""
     @transactions.each_with_index do |transaction, i|
       if transaction[:type] == :deposit
-        statement.prepend("\n #{transaction[:date]} || #{transaction[:amount]}.00 || || #{calc_balance(i)}.00")
+        statement.prepend("\n #{transaction[:date]} || #{'%.2f' % transaction[:amount]} || || #{calc_balance(i)}")
       else 
-        statement.prepend("\n #{transaction[:date]} || || #{transaction[:amount]}.00 || #{calc_balance(i)}.00")
+        statement.prepend("\n #{transaction[:date]} || || #{'%.2f' % transaction[:amount]} || #{calc_balance(i)}")
       end
     end
     statement.prepend("date || credit || debit || balance")
@@ -39,6 +40,6 @@ class BankAccount
         balance -= transaction[:amount]
       end
     end
-    balance
+    '%.2f' % balance
   end
 end
