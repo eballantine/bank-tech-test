@@ -40,6 +40,10 @@ describe BankAccount do
       expect { subject.withdraw(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
     end
 
+    it 'raises an error if given a float with more than 2 decimal places' do
+      expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
+    end
+
     it 'should show on the statement' do
       subject.withdraw(300.00)
       expect(subject.print_statement).to include("300.00")
