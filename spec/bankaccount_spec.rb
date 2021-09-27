@@ -8,74 +8,69 @@ describe BankAccount do
     allow(Date).to receive(:today).and_return("2021-01-01")
   end
 
-  describe '.deposit' do
-    it { is_expected.to respond_to(:deposit).with(1).arguments }
+  it { is_expected.to respond_to(:deposit).with(1).arguments }
+  it { is_expected.to respond_to(:withdraw).with(1).arguments }
+  it { is_expected.to respond_to(:print_statement).with(0).arguments }
 
-    it 'raises an error if not given a number' do
+  describe '.deposit' do
+    it 'should raise an error if not given a number' do
       expect { subject.deposit("Hello!") }.to raise_exception(RuntimeError, not_float_error)
     end
 
-    it 'raises an error if not given a positive number' do
+    it 'should raise an error if not given a positive number' do
       expect { subject.deposit(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
     end
 
-    it 'raises an error if given a float with more than 2 decimal places' do
+    it 'should raise an error if given a float with anything other than 2 decimal places' do
       expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
     end
 
-    it 'should show on the statement' do
-      subject.deposit(200.00)
-      expect(subject.print_statement).to include("200.00")
+    it 'should accept amounts which include pennies (not whole pounds)' do
+      expect { subject.deposit(9.99) }.not_to raise_exception()
     end
   end
 
   describe '.withdraw' do
-    it { is_expected.to respond_to(:withdraw).with(1).arguments }
-
-    it 'raises an error if not given a number' do
+    it 'should raise an error if not given a number' do
       expect { subject.withdraw("Hello!") }.to raise_exception(RuntimeError, not_float_error)
     end
 
-    it 'raises an error if not given a positive number' do
+    it 'should raise an error if not given a positive number' do
       expect { subject.withdraw(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
     end
 
-    it 'raises an error if given a float with more than 2 decimal places' do
+    it 'should raise an error if given a float with anything other than 2 decimal places' do
       expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
     end
 
-    it 'should show on the statement' do
-      subject.withdraw(300.00)
-      expect(subject.print_statement).to include("300.00")
+    it 'should accept amounts which include pennies (not whole pounds)' do
+      expect { subject.deposit(9.99) }.not_to raise_exception()
     end
   end
 
   describe '.print_statement' do
-    it { is_expected.to respond_to(:print_statement).with(0).arguments }
-
-    it 'should print headers' do
-      expect(subject.print_statement).to eq('date || credit || debit || balance')
+    it 'should print column headers' do
+      expect(subject.print_statement).to start_with('date || credit || debit || balance')
     end
 
-    it 'should print balance with transactions' do
-      subject.deposit(150.00)
-      subject.withdraw(50.00)
-      expect(subject.print_statement).to include("100.00")
-    end
-
-    it 'should print date with transactions' do
+    it 'should print the transaction date' do
       subject.deposit(150.00)
       expect(subject.print_statement).to include("01/01/2021")
     end
 
-    it 'should print deposits in the second column' do
+    it 'should print deposits in the second column with empty third column' do
       subject.deposit(100.00)
-      expect(subject.print_statement).to include "100.00 || ||"
+      expect(subject.print_statement).to include("|| 100.00 || ||")
     end
 
-    it 'should print withdrawals in the third column' do
+    it 'should print withdrawals in the third column with empty second column' do
       subject.withdraw(100.00)
-      expect(subject.print_statement).to include "|| || 100.00"
+      expect(subject.print_statement).to include("|| || 100.00 ||")
+    end
+
+    it 'should print account balance after each transaction has completed' do
+      subject.deposit(150.00)
+      expect(subject.print_statement).to end_with("150.00")
     end
 
     it 'should print transactions in reverse chronological order' do
