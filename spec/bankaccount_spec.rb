@@ -46,5 +46,11 @@ describe BankAccount do
     it 'should print headers' do
       expect(subject.print_statement).to eq('date || credit || debit || balance')
     end
+
+    it 'should print transactions along with balance' do
+      subject.deposit(150)
+      subject.withdraw(50)
+      expect(subject.print_statement).to include("100.00")
+    end
   end
 end
