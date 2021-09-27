@@ -18,6 +18,11 @@ describe BankAccount do
       subject.deposit(100)
       expect(subject.transactions).to eq [{ :date => "2021-01-01", :amount => 100 }]
     end
+
+    it 'should show on the statement' do
+      subject.deposit(200)
+      expect(subject.print_statement).to include("200.00")
+    end
   end
 
   describe '.withdraw' do
@@ -36,10 +41,5 @@ describe BankAccount do
     it 'should print headers' do
       expect(subject.print_statement).to eq('date || credit || debit || balance')
     end
-
-    # it 'should print headers and deposit' do
-    #   subject.deposit(200)
-    #   expect(subject.print_statement).to eq("date || credit || debit || balance\n10/01/2012 || 200.00 || || 200.00")
-    # end
   end
 end

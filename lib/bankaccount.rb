@@ -17,5 +17,9 @@ class BankAccount
 
   def print_statement
     statement = "date || credit || debit || balance"
+    @transactions.each do |transaction|
+      statement += "\n #{transaction[:amount]}.00"
+    end
+    statement
   end
 end
