@@ -1,4 +1,9 @@
 class BankAccount
+  attr_reader :transactions
+
+  def initialize
+    @transactions = []
+  end
 
   def deposit(amount)
   end
