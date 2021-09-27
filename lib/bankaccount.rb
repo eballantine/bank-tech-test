@@ -1,7 +1,6 @@
 require 'Date'
 
 class BankAccount
-  attr_reader :transactions
 
   def initialize
     @transactions = []

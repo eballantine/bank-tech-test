@@ -5,19 +5,8 @@ describe BankAccount do
     allow(Date).to receive(:today).and_return("2021-01-01")
   end
 
-  # test for TDD, not needed in final test suite
-  it 'should start with no transactions recorded' do
-    expect(subject.transactions).to eq []
-  end
-
   describe '.deposit' do
     it { is_expected.to respond_to(:deposit).with(1).arguments }
-
-    # test for TDD, not needed in final test suite
-    it 'should save date and amount of the transaction' do
-      subject.deposit(100)
-      expect(subject.transactions).to eq [{ type: :deposit, date: "2021-01-01", amount: 100 }]
-    end
 
     it 'should show on the statement' do
       subject.deposit(200)
@@ -27,12 +16,6 @@ describe BankAccount do
 
   describe '.withdraw' do
     it { is_expected.to respond_to(:withdraw).with(1).arguments }
-
-    # test for TDD, not needed in final test suite
-    it 'should save date and amount of the transaction, with amount negative' do
-      subject.withdraw(100)
-      expect(subject.transactions).to eq [{ type: :withdrawal, date: "2021-01-01", amount: 100 }]
-    end
 
     it 'should show on the statement' do
       subject.withdraw(300)
