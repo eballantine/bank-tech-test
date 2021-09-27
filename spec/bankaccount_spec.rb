@@ -1,6 +1,9 @@
 require 'bankaccount'
 
 describe BankAccount do 
+  let(:not_float_error) { "Please provide the amount in pounds and pence, e.g. 10.00" }
+  let(:not_positive_error) { "Deposit amount must be positive" }
+
   before(:each) do 
     allow(Date).to receive(:today).and_return("2021-01-01")
   end
@@ -9,11 +12,15 @@ describe BankAccount do
     it { is_expected.to respond_to(:deposit).with(1).arguments }
 
     it 'raises an error if not given a number' do
-      expect { subject.deposit("Hello!") }.to raise_exception(RuntimeError, "Please provide the amount in pounds and pence, e.g. 10.00" )
+      expect { subject.deposit("Hello!") }.to raise_exception(RuntimeError, not_float_error)
     end
 
     it 'raises an error if not given a positive number' do
-      expect { subject.deposit(-10.00) }.to raise_exception(RuntimeError, "Deposit amount must be positive")
+      expect { subject.deposit(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
+    end
+
+    it 'raises an error if given a float with more than 2 decimal places' do
+      expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
     end
 
     it 'should show on the statement' do
@@ -26,11 +33,11 @@ describe BankAccount do
     it { is_expected.to respond_to(:withdraw).with(1).arguments }
 
     it 'raises an error if not given a number' do
-      expect { subject.withdraw("Hello!") }.to raise_exception(RuntimeError, "Please provide the amount in pounds and pence, e.g. 10.00" )
+      expect { subject.withdraw("Hello!") }.to raise_exception(RuntimeError, not_float_error)
     end
 
     it 'raises an error if not given a positive number' do
-      expect { subject.withdraw(-10.00) }.to raise_exception(RuntimeError, "Deposit amount must be positive")
+      expect { subject.withdraw(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
     end
 
     it 'should show on the statement' do

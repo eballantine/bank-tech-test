@@ -50,5 +50,6 @@ class BankAccount
   def valid_amount?(amount)
     raise "Please provide the amount in pounds and pence, e.g. 10.00" unless amount.is_a? Float
     raise "Deposit amount must be positive" if amount <= 0
+    raise "Please provide the amount in pounds and pence, e.g. 10.00" if amount.round(2) != amount
   end
 end
