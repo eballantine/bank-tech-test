@@ -18,7 +18,7 @@ class BankAccount
   def print_statement
     statement = "date || credit || debit || balance"
     @transactions.each_with_index do |transaction, i|
-      statement += "\n #{transaction[:amount]}.00 || #{calc_balance(i)}.00"
+      statement += "\n #{transaction[:date]} || #{transaction[:amount]}.00 || #{calc_balance(i)}.00"
     end
     statement
   end

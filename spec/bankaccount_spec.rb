@@ -52,5 +52,10 @@ describe BankAccount do
       subject.withdraw(50)
       expect(subject.print_statement).to include("100.00")
     end
+
+    it 'should print date with transaction' do
+      subject.deposit(150)
+      expect(subject.print_statement).to include("2021-01-01")
+    end
   end
 end
