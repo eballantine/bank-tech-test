@@ -8,11 +8,11 @@ class BankAccount
   end
 
   def deposit(amount)
-    @transactions << {:date => "#{Date.today}", :amount => amount}
+    @transactions << {type: "deposit", date: "#{Date.today}", amount: amount}
   end
 
   def withdraw(amount)
-    @transactions << {:date => "#{Date.today}", :amount => -amount}
+    @transactions << {type: "withdrawal", date: "#{Date.today}", amount: amount}
   end
 
   def print_statement
@@ -28,7 +28,11 @@ class BankAccount
   def calc_balance(i)
     balance = 0
     @transactions[0..i].each do |transaction|
-      balance += transaction[:amount]
+      if transaction[:type] == 'deposit'
+        balance += transaction[:amount]
+      else
+        balance -= transaction[:amount]
+      end
     end
     balance
   end
