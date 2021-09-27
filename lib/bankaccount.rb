@@ -11,6 +11,7 @@ class BankAccount
   def deposit(amount)
     check_validity(amount)
     @transactions << { type: :deposit, date: transaction_date.to_s, amount: amount.round(2) }
+    "Deposit complete"
   end
 
   def withdraw(amount)

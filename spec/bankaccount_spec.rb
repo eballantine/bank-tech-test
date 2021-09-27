@@ -31,6 +31,10 @@ describe BankAccount do
     it 'should accept amounts which include pennies (not whole pounds)' do
       expect { subject.deposit(9.99) }.not_to raise_exception
     end
+
+    it 'should return a success message if deposit is successful' do
+      expect(subject.deposit(10.00)).to eq "Deposit complete"
+    end
   end
 
   describe '.withdraw' do
