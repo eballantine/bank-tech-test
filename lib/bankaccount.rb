@@ -15,15 +15,15 @@ class BankAccount
   end
 
   def print_statement
-    statement = "date || credit || debit || balance"
+    statement = ""
     @transactions.each_with_index do |transaction, i|
       if transaction[:type] == :deposit
-        statement += "\n #{transaction[:date]} || #{transaction[:amount]}.00 || || #{calc_balance(i)}.00"
+        statement.prepend("\n #{transaction[:date]} || #{transaction[:amount]}.00 || || #{calc_balance(i)}.00")
       else 
-        statement += "\n #{transaction[:date]} || || #{transaction[:amount]}.00 || #{calc_balance(i)}.00"
+        statement.prepend("\n #{transaction[:date]} || || #{transaction[:amount]}.00 || #{calc_balance(i)}.00")
       end
     end
-    statement
+    statement.prepend("date || credit || debit || balance")
   end
 
   private

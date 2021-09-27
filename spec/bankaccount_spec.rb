@@ -50,5 +50,11 @@ describe BankAccount do
       subject.withdraw(100)
       expect(subject.print_statement).to include "|| || 100.00"
     end
+
+    it 'should print transactions in reverse chronological order' do
+      subject.deposit(200)
+      subject.withdraw(10)
+      expect(subject.print_statement).to eq "date || credit || debit || balance\n 2021-01-01 || || 10.00 || 190.00\n 2021-01-01 || 200.00 || || 200.00"
+    end
   end
 end
