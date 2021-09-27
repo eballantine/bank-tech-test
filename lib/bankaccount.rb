@@ -33,11 +33,7 @@ class BankAccount
   def calc_balance(i)
     balance = 0
     @transactions[0..i].each do |transaction|
-      if transaction[:type] == :deposit
-        balance += transaction[:amount]
-      else
-        balance -= transaction[:amount]
-      end
+      transaction[:type] == :deposit ? balance += transaction[:amount] : balance -= transaction[:amount]
     end
     '%.2f' % balance
   end
