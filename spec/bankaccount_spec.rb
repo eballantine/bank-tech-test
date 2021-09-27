@@ -33,6 +33,11 @@ describe BankAccount do
       subject.withdraw(100)
       expect(subject.transactions).to eq [{ :date => "2021-01-01", :amount => -100 }]
     end
+
+    it 'should show on the statement' do
+      subject.withdraw(300)
+      expect(subject.print_statement).to include("-300.00")
+    end
   end
 
   describe '.print_statement' do
