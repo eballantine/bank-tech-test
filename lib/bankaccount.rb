@@ -1,3 +1,5 @@
+require 'Date'
+
 class BankAccount
   attr_reader :transactions
 
@@ -6,6 +8,7 @@ class BankAccount
   end
 
   def deposit(amount)
+    @transactions << {:"#{Date.today}" => amount}
   end
 
   def withdraw(amount)
