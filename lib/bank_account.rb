@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'Date'
 require_relative 'transaction'
 require_relative 'statement'
 

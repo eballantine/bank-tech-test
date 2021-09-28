@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'Date'
+
 # This class is responsible for creating account transactions (deposits and withdrawals)
 class Transaction
   def create(type, amount)
