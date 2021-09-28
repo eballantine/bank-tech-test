@@ -29,7 +29,7 @@ Create a new bank account:<br>
 <br>
 ```my_account = BankAccount.new```<br>
 <br>
-You're now free to make deposits, withdrawals, or check your statement as you see fit:<br>
+You're now free to make deposits, withdrawals, or check your statement as you see fit. Please just ensure you provide values to decimal places:<br>
 <br>
 ![Bank program being run in IRB](/images/bankaccount2.png)<br>
 <br>
