@@ -31,7 +31,7 @@ Create a new bank account:<br>
 <br>
 You're now free to make deposits, withdrawals, or check your statement as you see fit:<br>
 <br>
-![Bank program being run in IRB](/images/bankaccountv1.png)<br>
+![Bank program being run in IRB](/images/bankaccount2.png)<br>
 <br>
 ## Requirements
 

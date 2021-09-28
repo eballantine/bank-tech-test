@@ -8,10 +8,13 @@ class Statement
 
   def print_statement
     statement = +''
-    @transactions.each_with_index do |transaction, index|
-      statement.prepend(create_statement_entry(transaction, index))
+    if @transactions.length > 0
+      @transactions.each_with_index do |transaction, index|
+        statement.prepend(create_statement_entry(transaction, index))
+      end
     end
     statement.prepend('date || credit || debit || balance')
+    puts statement
   end
 
   private
