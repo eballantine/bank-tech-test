@@ -8,9 +8,7 @@ class Statement
   end
 
   def print_statement
-    if @transactions.length > 0
-      assemble_statement_entries
-    end
+    assemble_statement_entries if @transactions.length > 0
     @statement.prepend('date || credit || debit || balance')
     puts @statement
   end
@@ -27,7 +25,6 @@ class Statement
 
   def calc_running_balance(index)
     balance = 0
-
     @transactions[0..index].each do |transaction|
       transaction[:type] == :deposit ? balance += transaction[:amount] : balance -= transaction[:amount]
     end
