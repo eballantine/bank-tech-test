@@ -4,5 +4,6 @@
 class Statement
 
   def print_statement(transactions)
+    'date || credit || debit || balance'
   end
 end
