@@ -28,7 +28,7 @@ describe BankAccount do
       expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
     end
 
-    it 'should accept amounts which include pennies (not whole pounds)' do
+    it 'should accept amounts which include pennies (not only whole pounds)' do
       expect { subject.deposit(9.99) }.not_to raise_exception
     end
 
@@ -58,7 +58,7 @@ describe BankAccount do
       expect(subject.withdraw(500.00)).to eq(insufficient_funds_error)
     end
 
-    it 'should accept amounts which include pennies (not whole pounds)' do
+    it 'should accept amounts which include pennies (not only whole pounds)' do
       expect { subject.withdraw(9.99) }.not_to raise_exception
     end
 

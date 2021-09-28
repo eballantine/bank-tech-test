@@ -3,5 +3,7 @@
 require 'transaction'
 
 describe Transaction do
-  it { is_expected.to respond_to(:create).with(2).arguments }
+  it 'is initialized with 2 arguments' do
+    expect(described_class).to respond_to(:new).with(2).arguments
+  end
 end
