@@ -23,7 +23,7 @@ To run the program, ensure you're in the root folder of the project and start an
 <br>
 Require the code:<br>
 <br>
-```require './lib/bankaccount.rb'```<br>
+```require './lib/bank_account.rb'```<br>
 <br>
 Create a new bank account:<br>
 <br>

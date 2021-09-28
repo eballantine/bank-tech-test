@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'Date'
+require_relative 'transaction_log'
 
 # This class is responsible for allowing a user to interact with their bank account
 class BankAccount
@@ -11,7 +12,6 @@ class BankAccount
   def deposit(amount)
     check_validity(amount)
     @transaction_log.create(:deposit, amount)
-    "Deposit complete"
   end
 
   def withdraw(amount)
@@ -19,7 +19,6 @@ class BankAccount
     return 'Insufficient funds to make this withdrawal' if amount > calc_balance
 
     @transaction_log.create(:withdrawal, amount)
-    "Withdrawal complete"
   end
 
   def print_statement

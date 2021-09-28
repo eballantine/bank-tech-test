@@ -10,6 +10,7 @@ class TransactionLog
 
   def create(type, amount)
     @transactions << { type: type, date: transaction_date, amount: amount.round(2) }
+    @transactions.last[:type] == :deposit ? "Deposit complete" : "Withdrawal complete"
   end
 
   private
