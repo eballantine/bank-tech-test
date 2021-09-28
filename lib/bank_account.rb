@@ -7,7 +7,7 @@ require_relative 'statement'
 # This class is responsible for allowing a user to interact with their bank account
 class BankAccount
   attr_reader :transactions
-  
+
   def initialize
     @transactions = []
   end
@@ -15,7 +15,7 @@ class BankAccount
   def deposit(amount)
     check_validity(amount)
     @transactions << Transaction.new.create(:deposit, amount)
-    "Deposit complete"
+    'Deposit complete'
   end
 
   def withdraw(amount)
@@ -23,7 +23,7 @@ class BankAccount
     return 'Insufficient funds to make this withdrawal' if amount > calc_balance
 
     @transactions << Transaction.new.create(:withdrawal, amount)
-    "Withdrawal complete"
+    'Withdrawal complete'
   end
 
   def print_statement

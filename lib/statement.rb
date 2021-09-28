@@ -2,7 +2,6 @@
 
 # This class is responsible for generating bank statements
 class Statement
-
   def initialize(transactions)
     @transactions = transactions
   end
