@@ -7,10 +7,6 @@ describe BankAccount do
   let(:not_positive_error) { 'Deposit amount must be positive' }
   let(:insufficient_funds_error) { 'Insufficient funds to make this withdrawal' }
 
-  let(:transaction_log) { double("TransactionLog", transactions: []) }
-  let(:statement) { double('Statement') }
-
-
   before(:each) do
     allow(Date).to receive(:today).and_return('2021-01-01')
   end
@@ -20,24 +16,31 @@ describe BankAccount do
   it { is_expected.to respond_to(:print_statement).with(0).arguments }
 
   describe '.deposit' do
-    it 'should raise an error if not given a float' do
-      expect { subject.deposit('Hello!') }.to raise_exception(RuntimeError, not_float_error)
+    context 'successful' do
+      it 'should save a new transaction' do
+        expect { subject.deposit(10.00) }.to change { subject.transaction_log.transactions.length }.by(1)
+      end
+      it 'should return a success message if deposit is successful' do
+        expect(subject.deposit(10.00)).to eq "Deposit complete"
+      end
     end
-
-    it 'should raise an error if not given a positive number' do
-      expect { subject.deposit(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
-    end
-
-    it 'should raise an error if given a float with anything other than 2 decimal places' do
-      expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
-    end
-
-    it 'should accept amounts which include pennies (not only whole pounds)' do
-      expect { subject.deposit(9.99) }.not_to raise_exception
-    end
-
-    it 'should return a success message if deposit is successful' do
-      expect(subject.deposit(10.00)).to eq "Deposit complete"
+  
+    context 'unsuccessful' do
+      it 'should raise an error if not given a float' do
+        expect { subject.deposit('Hello!') }.to raise_exception(RuntimeError, not_float_error)
+      end
+  
+      it 'should raise an error if not given a positive number' do
+        expect { subject.deposit(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
+      end
+  
+      it 'should raise an error if given a float with anything other than 2 decimal places' do
+        expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
+      end
+  
+      it 'should accept amounts which include pennies (not only whole pounds)' do
+        expect { subject.deposit(9.99) }.not_to raise_exception
+      end
     end
   end
 
@@ -72,8 +75,6 @@ describe BankAccount do
   end
 
   describe '.print_statement' do
-    it 'should call Statement print_statement method with transactions argument' 
-
     # it 'should print the transaction date' do
     #   subject.deposit(150.00)
     #   expect(subject.print_statement).to include('01/01/2021')

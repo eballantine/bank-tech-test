@@ -5,6 +5,8 @@ require_relative 'transaction_log'
 
 # This class is responsible for allowing a user to interact with their bank account
 class BankAccount
+  attr_reader :transaction_log
+  
   def initialize
     @transaction_log = TransactionLog.new
   end
