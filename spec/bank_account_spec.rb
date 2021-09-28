@@ -20,8 +20,13 @@ describe BankAccount do
       it 'should save a new transaction' do
         expect { subject.deposit(10.00) }.to change { subject.transaction_log.transactions.length }.by(1)
       end
+
       it 'should return a success message if deposit is successful' do
         expect(subject.deposit(10.00)).to eq "Deposit complete"
+      end
+
+      it 'should accept amounts which include pennies (not only whole pounds)' do
+        expect { subject.deposit(9.99) }.not_to raise_exception
       end
     end
   
@@ -37,10 +42,6 @@ describe BankAccount do
       it 'should raise an error if given a float with anything other than 2 decimal places' do
         expect { subject.deposit(10.123) }.to raise_exception(RuntimeError, not_float_error)
       end
-  
-      it 'should accept amounts which include pennies (not only whole pounds)' do
-        expect { subject.deposit(9.99) }.not_to raise_exception
-      end
     end
   end
 
@@ -49,28 +50,36 @@ describe BankAccount do
       subject.deposit(100.00)
     end
 
-    it 'should raise an error if not given a float' do
-      expect { subject.withdraw('Hello!') }.to raise_exception(RuntimeError, not_float_error)
+    context 'successful' do
+      it 'should save a new transaction' do
+        expect { subject.withdraw(10.00) }.to change { subject.transaction_log.transactions.length }.by(1)
+      end
+
+      it 'should accept amounts which include pennies (not only whole pounds)' do
+        expect { subject.withdraw(9.99) }.not_to raise_exception
+      end
+  
+      it 'should return a success message if withdrawal is successful' do
+        expect(subject.withdraw(10.00)).to eq "Withdrawal complete"
+      end
     end
 
-    it 'should raise an error if not given a positive number' do
-      expect { subject.withdraw(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
-    end
-
-    it 'should raise an error if given a float with anything other than 2 decimal places' do
-      expect { subject.withdraw(10.123) }.to raise_exception(RuntimeError, not_float_error)
-    end
-
-    it 'should return if attempting to withdraw more than the current balance' do
-      expect(subject.withdraw(500.00)).to eq(insufficient_funds_error)
-    end
-
-    it 'should accept amounts which include pennies (not only whole pounds)' do
-      expect { subject.withdraw(9.99) }.not_to raise_exception
-    end
-
-    it 'should return a success message if withdrawal is successful' do
-      expect(subject.withdraw(10.00)).to eq "Withdrawal complete"
+    context 'unsuccessful' do
+      it 'should raise an error if not given a float' do
+        expect { subject.withdraw('Hello!') }.to raise_exception(RuntimeError, not_float_error)
+      end
+  
+      it 'should raise an error if not given a positive number' do
+        expect { subject.withdraw(-10.00) }.to raise_exception(RuntimeError, not_positive_error)
+      end
+  
+      it 'should raise an error if given a float with anything other than 2 decimal places' do
+        expect { subject.withdraw(10.123) }.to raise_exception(RuntimeError, not_float_error)
+      end
+  
+      it 'should return if attempting to withdraw more than the current balance' do
+        expect(subject.withdraw(500.00)).to eq(insufficient_funds_error)
+      end
     end
   end
 
