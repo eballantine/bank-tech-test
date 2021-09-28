@@ -2,8 +2,10 @@
 
 require 'statement'
 
-# describe Statement do
-#   let(:transaction_log) { double("TransactionLog", transactions: []) }
+describe Statement do
+  let(:statement) { described_class.new([]) }
 
-#   it { is_expected.to respond_to(:print_statement).with(0).argument }
-# end
+  it 'should respond to print_statment with no arguments' do
+    expect(statement).to respond_to(:print_statement).with(0).arguments
+  end
+end
