@@ -32,6 +32,7 @@ Create a new bank account:<br>
 You're now free to make deposits, withdrawals, or check your statement as you see fit:<br>
 <br>
 ![Bank program being run in IRB](/images/bankaccountv1.png)<br>
+<br>
 ## Requirements
 
 You should be able to interact with your code via a REPL like IRB or the JavaScript console.<br>
@@ -72,10 +73,12 @@ From the requirements I formed a domain model. The easiest implementation of the
 The methods deposit and withdraw take 1 argument, an amount. The amount should always be a positive either integer or float to 2 decimal places.<br> 
 A transaction will be recorded following a deposit or withdrawal with a timestamp of when the transaction occured.
 <br> 
-The print_statement method will take the stored transactions array and use a private calc_balance method to form each line of the statement and print. In the interests of keeping the statement a sensible length for customers who bank frequently and/or long term -<br> 
-<br> 
-_Should the statement be restricted to print just the latest month, or latest 30 transactions, or similar?_ <br> 
+The print_statement method will take the stored transactions array and will be responsible for calculating the running balance after each transaction on the statement.<br> 
  <br> 
 Without mention of overdraft facility, I will restrict the bankaccount from allowing a withdrawal greater than the current balance.<br>
 <br>
 ![Domain model for bank account](/images/plan.png)
+<br>
+After writing my code in this way, the BankAccount class, whilst each method was reasonably short and reasonably readable, had too many methods and too many responsibilities. So I reviewed my designed, changed my implementation and separated my code into 3 separate responsibilities.<br>
+<br>
+![Domain model for bank account, statement, and transaction](/images/plan2.png)
