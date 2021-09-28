@@ -3,6 +3,10 @@
 require 'transaction_log'
 
 describe TransactionLog do
+  before(:each) do
+    allow(Date).to receive(:today).and_return('2021-01-01')
+  end
+
   it 'is initialized with 0 arguments' do
     expect(described_class).to respond_to(:new).with(0).arguments
   end
