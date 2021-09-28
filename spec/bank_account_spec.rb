@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'bankaccount'
+require 'bank_account'
 
 describe BankAccount do
   let(:not_float_error) { 'Please provide the amount in pounds and pence, e.g. 10.00' }

@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 # This class is responsible for creating account transactions (deposits and withdrawals)
-class Transaction
-  attr_reader :type, :date, :amount
+class TransactionLog
+  attr_reader :transactions
 
-  def initialize(type, amount)
-    @type = type
-    @date = transaction_date
-    @amount = amount.round(2) 
+  def initialize
+    @transactions = []
+  end
+
+  def create(type, amount)
+    @transactions << { type: type, date: transaction_date, amount: amount.round(2) }
   end
 
   private
