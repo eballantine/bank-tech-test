@@ -18,7 +18,7 @@ describe BankAccount do
   describe '.deposit' do
     context 'successful' do
       it 'should save a new transaction' do
-        expect { subject.deposit(10.00) }.to change { subject.transaction_log.transactions.length }.by(1)
+        expect { subject.deposit(10.00) }.to change { subject.transactions.length }.by(1)
       end
 
       it 'should return a success message if deposit is successful' do
@@ -52,7 +52,7 @@ describe BankAccount do
 
     context 'successful' do
       it 'should save a new transaction' do
-        expect { subject.withdraw(10.00) }.to change { subject.transaction_log.transactions.length }.by(1)
+        expect { subject.withdraw(10.00) }.to change { subject.transactions.length }.by(1)
       end
 
       it 'should accept amounts which include pennies (not only whole pounds)' do

@@ -4,7 +4,6 @@
 class Transaction
 
   def create(type, amount)
-    type == :deposit ? (print "Deposit complete") : (print "Withdrawal complete")
     { type: type, date: transaction_date, amount: amount.round(2) }
   end
 

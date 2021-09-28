@@ -1,30 +1,33 @@
 # frozen_string_literal: true
 
 require 'Date'
-require_relative 'transaction_log'
+require_relative 'transaction'
+require_relative 'statement'
 
 # This class is responsible for allowing a user to interact with their bank account
 class BankAccount
-  attr_reader :transaction_log
+  attr_reader :transactions
   
   def initialize
-    @transaction_log = TransactionLog.new
+    @transactions = []
   end
 
   def deposit(amount)
     check_validity(amount)
-    @transaction_log.create(:deposit, amount)
+    @transactions << Transaction.new.create(:deposit, amount)
+    "Deposit complete"
   end
 
   def withdraw(amount)
     check_validity(amount)
     return 'Insufficient funds to make this withdrawal' if amount > calc_balance
 
-    @transaction_log.create(:withdrawal, amount)
+    @transactions << Transaction.new.create(:withdrawal, amount)
+    "Withdrawal complete"
   end
 
   def print_statement
-    @statement = Statement.new(@transaction_log.transactions)
+    @statement = Statement.new(@transactions)
     @statement.print_statement
   end
 
@@ -32,7 +35,7 @@ class BankAccount
 
   def calc_balance
     balance = 0
-    @transaction_log.transactions.each do |transaction|
+    @transactions.each do |transaction|
       transaction[:type] == :deposit ? balance += transaction[:amount] : balance -= transaction[:amount]
     end
     balance
