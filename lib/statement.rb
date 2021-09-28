@@ -4,17 +4,15 @@
 class Statement
   def initialize(transactions)
     @transactions = transactions
+    @statement = +''
   end
 
   def print_statement
-    statement = +''
     if @transactions.length > 0
-      @transactions.each_with_index do |transaction, index|
-        statement.prepend(create_statement_entry(transaction, index))
-      end
+      assemble_statement_entries
     end
-    statement.prepend('date || credit || debit || balance')
-    puts statement
+    @statement.prepend('date || credit || debit || balance')
+    puts @statement
   end
 
   private
@@ -34,5 +32,11 @@ class Statement
       transaction[:type] == :deposit ? balance += transaction[:amount] : balance -= transaction[:amount]
     end
     format('%.2f', balance)
+  end
+
+  def assemble_statement_entries
+    @transactions.each_with_index do |transaction, index|
+      @statement.prepend(create_statement_entry(transaction, index))
+    end
   end
 end
