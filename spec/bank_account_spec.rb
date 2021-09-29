@@ -6,9 +6,11 @@ describe BankAccount do
   let(:not_float_error) { 'Please provide the amount in pounds and pence, e.g. 10.00' }
   let(:not_positive_error) { 'Deposit amount must be positive' }
   let(:insufficient_funds_error) { 'Insufficient funds to make this withdrawal' }
+  let(:transaction) { instance_double('Transaction') }
 
   before(:each) do
     allow(Date).to receive(:today).and_return('2021-01-01')
+    allow(Transaction).to receive(:new).and_return(transaction)
   end
 
   it { is_expected.to respond_to(:deposit).with(1).arguments }
@@ -17,13 +19,13 @@ describe BankAccount do
 
   describe '.deposit' do
     context 'successful' do
-      it 'should accept amounts which include pennies (not only whole pounds)' # do
-      #   expect { subject.deposit(9.99) }.not_to raise_exception
-      # end
-
-      it 'should make a transaction instance & pass it :deposit and amount'
+      it 'should accept amounts which include pennies (not only whole pounds)' do
+        allow(transaction).to receive(:create).and_return({ type: :deposit, date: '01/01/2021', amount: 9.99 })
+        expect { subject.deposit(9.99) }.not_to raise_exception
+      end
 
       it 'should return a success message if deposit is successful' do
+        allow(transaction).to receive(:create).and_return({ type: :deposit, date: '01/01/2021', amount: 10.00 })
         expect(subject.deposit(10.00)).to eq 'Deposit complete'
       end
     end
@@ -45,20 +47,20 @@ describe BankAccount do
 
   describe '.withdraw' do
     before(:each) do
+      allow(transaction).to receive(:create).and_return({ type: :deposit, date: '01/01/2021', amount: 100.00 })
       subject.deposit(100.00)
     end
 
     context 'successful' do
       it 'should accept amounts which include pennies (not only whole pounds)' do
+        allow(transaction).to receive(:create).and_return({ type: :withdrawal, date: '01/01/2021', amount: 9.99 })
         expect { subject.withdraw(9.99) }.not_to raise_exception
       end
 
       it 'should return a success message if withdrawal is successful' do
+        allow(transaction).to receive(:create).and_return({ type: :withdrawal, date: '01/01/2021', amount: 10.00 })
         expect(subject.withdraw(10.00)).to eq 'Withdrawal complete'
       end
-
-      it 'should make a transaction instance & pass it :deposit and amount'
-
     end
 
     context 'unsuccessful' do
@@ -78,9 +80,5 @@ describe BankAccount do
         expect(subject.withdraw(500.00)).to eq(insufficient_funds_error)
       end
     end
-  end
-
-  describe '.print_statement' do
-    it 'should create a new statement instance, should pass it transactions & run print method on it'
   end
 end
