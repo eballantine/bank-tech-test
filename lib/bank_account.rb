@@ -24,12 +24,12 @@ class BankAccount
   end
 
   def print_statement
-    @statement = Statement.new(@transactions)
-    @statement.print_statement
+    statement = Statement.new(@transactions)
+    statement.print_statement
   end
 
   private
-  
+
   attr_reader :transactions
 
   def calc_balance
