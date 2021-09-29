@@ -4,10 +4,12 @@ require 'statement'
 
 describe Statement do
   let(:statement_no_transactions) { described_class.new([]) }
-  let(:statement_with_transactions) { described_class.new([
-    { type: :deposit, date: '01/01/2021', amount: 100.00 },
-    { type: :withdrawal, date: '03/10/2022', amount: 10.00 }
-  ]) }
+  let(:statement_with_transactions) do
+    described_class.new(
+      [{ type: :deposit, date: '01/01/2021', amount: 100.00 },
+       { type: :withdrawal, date: '03/10/2022', amount: 10.00 }]
+    )
+  end
 
   it 'should respond to print_statment with no arguments' do
     expect(statement_no_transactions).to respond_to(:print_statement).with(0).arguments
@@ -15,7 +17,9 @@ describe Statement do
 
   describe '.print_statement' do
     it 'should print column headers' do
-      expect { statement_no_transactions.print_statement }.to output("date || credit || debit || balance\n").to_stdout
+      expect { statement_no_transactions.print_statement }.to output(
+        "date || credit || debit || balance\n"
+      ).to_stdout
     end
 
     it 'should print the transaction date' do

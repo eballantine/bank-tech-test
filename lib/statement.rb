@@ -8,7 +8,7 @@ class Statement
   end
 
   def print_statement
-    assemble_statement_entries if @transactions.length > 0
+    assemble_statement_entries if @transactions.any?
     @statement.prepend('date || credit || debit || balance')
     puts @statement
   end
