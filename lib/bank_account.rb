@@ -5,8 +5,6 @@ require_relative 'statement'
 
 # This class is responsible for allowing a user to interact with their bank account
 class BankAccount
-  attr_reader :transactions
-
   def initialize
     @transactions = []
   end
@@ -31,6 +29,8 @@ class BankAccount
   end
 
   private
+  
+  attr_reader :transactions
 
   def calc_balance
     balance = 0
